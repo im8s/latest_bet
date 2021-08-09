@@ -1,0 +1,10 @@
+{
+  "Name":"AppService",
+  "Host":"0.0.0.0",
+  "TcpPort":8999,
+  "MaxConn":30000,
+  "WorkerPoolSize":10,
+  "MaxPacketSize":65000,
+  "LogDir": "./appservice_log",
+  "LogFile":"appservice.log"
+}

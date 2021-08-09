@@ -1,0 +1,98 @@
+syntax="proto3";                //Proto协议
+package pb;                     //当前包名
+option csharp_namespace="Pb";   //给C#提供的选项
+option go_package="./;pb";
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+//玩家状态
+message PlayerState{
+	string		PID=1;
+	int32		Type=2;		// 0:Player login, 1:PlayerJoin, 2:PlayerLeav
+	int32		Code=3;		// 错误代码  0:成功, 其他:错误
+}
+
+//玩家信息
+message PlayerInfo{
+	string 		PID=1;
+	string 		Name=2;
+	int32		Type=3;
+}
+
+//玩家列表
+message PlayerList{
+	repeated PlayerInfo 	Players=1;
+}
+
+//玩家登录
+message PlayerLogin{
+	string 		Name=1;
+	string 		Pass=2;
+	int32		Type=3;
+}
+
+//玩家加入
+message PlayerJoin{
+	PlayerInfo	PInfo=1;
+}
+
+//玩家离开
+message PlayerLeave{
+	string 		PID=1;
+	int32		Reason=2;
+}
+
+//玩家离开列表
+message PLeaveList{
+	repeated PlayerLeave 	PLeaves=1;
+}
+
+//其他请求
+message PlayerOther{
+	int32 		RType=1;	//请求类型
+}
+
+//玩家请求消息
+message PlayerReqMsg{
+	string 		PID=1;
+	oneof Data {
+			PlayerLogin		PLogin=2;		//player login 对应玩家登录
+			PlayerJoin 		PJoin=3;		//player join 对应玩家加入
+			PlayerLeave 	PLeave=4;		//player leave 对应玩家离开
+			PlayerOther 	POther=5;		//player other 其他请求类型
+	}
+}
+
+//玩家响应消息
+message PlayerResMsg{
+	string 	PID=1;
+	oneof Data {
+			PlayerState 	PStatus=2;		//状态信息
+			PlayerInfo 		PInfo=3;		//单个player
+			PlayerList 		PList=4;		//player列表
+			PlayerJoin 		PJoin=5;		//player join  notify
+			PlayerLeave 	PLeave=6;		//player leave notify
+			PLeaveList		PLList=7;		//player leave list
+	}
+}
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+//系统消息
+message SysMsg{
+	string 		PID=1;
+	string 		Content=2;    //内容
+}
+
+//聊天消息
+message TalkMsg{
+	string 		PID=1;
+	string 		Content=2;    //聊天内容
+}
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+
